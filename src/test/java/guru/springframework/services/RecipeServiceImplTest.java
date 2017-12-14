@@ -1,11 +1,10 @@
 package guru.springframework.services;
 
-import guru.springframework.Repository.RecipeRepository;
+import guru.springframework.repository.RecipeRepository;
 import guru.springframework.domain.Recipe;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;

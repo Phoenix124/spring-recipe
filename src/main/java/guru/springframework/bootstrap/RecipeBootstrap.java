@@ -1,8 +1,8 @@
 package guru.springframework.bootstrap;
 
-import guru.springframework.Repository.CategoryRepository;
-import guru.springframework.Repository.RecipeRepository;
-import guru.springframework.Repository.UnitOfMeasureRepository;
+import guru.springframework.repository.CategoryRepository;
+import guru.springframework.repository.RecipeRepository;
+import guru.springframework.repository.UnitOfMeasureRepository;
 import guru.springframework.domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
