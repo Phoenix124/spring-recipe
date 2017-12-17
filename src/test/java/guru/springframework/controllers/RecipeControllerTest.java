@@ -2,8 +2,9 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
+import guru.springframework.repository.RecipeRepository;
 import guru.springframework.services.RecipeService;
-import javassist.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,6 +12,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -23,6 +26,9 @@ public class RecipeControllerTest {
 
     @Mock
     RecipeService recipeService;
+
+    @Mock
+    RecipeRepository recipeRepository;
 
     RecipeController controller;
 
@@ -50,6 +56,24 @@ public class RecipeControllerTest {
                 .andExpect(model().attributeExists("recipe"));
     }
 
+    @Test()
+    public void getRecipeBuIdTestNotFound() throws Exception{
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception{
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("recipe/1/show")).andExpect(status().isNotFound());
+    }
 
     @Test
     public void testPostNewRecipeForm() throws Exception {
